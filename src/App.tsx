@@ -1,6 +1,7 @@
 import { CssBaseline } from "@mui/material";
 import { StyledApp } from "./App.styled";
 import Products from "./components/Products/Products";
+import PageNumber from "./components/PageNumber/PageNumber";
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
       <CssBaseline />
       <input type="text" />
       <Products />
-      <p>pagination</p>
+      <PageNumber />
     </StyledApp>
   );
 }
