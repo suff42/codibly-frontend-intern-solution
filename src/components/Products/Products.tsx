@@ -1,33 +1,32 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import {
   Paper,
   styled,
   TableBody,
   TableCell,
-  tableCellClasses,
   TableContainer,
   TableHead,
   TableRow,
   Theme,
 } from "@mui/material";
-
-interface UserI {
-  id: number;
-  name: string;
-  year: number;
-  color: string;
-  pantone_value: string;
-}
+import {
+  ProductContextType,
+  ResponseI,
+} from "../../context/ProductContext.types";
+import { ProductsContext } from "../../context/ProductsContext";
 
 const Products = () => {
-  const [products, setProducts] = useState<UserI[]>([]);
+  const { products, setProducts, setTotalPages } = useContext(
+    ProductsContext
+  ) as ProductContextType;
 
   useEffect(() => {
     fetch("https://reqres.in/api/products?per_page=5")
       .then((response) => response.json())
-      .then((data) => {
+      .then((data: ResponseI) => {
         setProducts(data.data);
+        setTotalPages(data.total_pages);
       });
   }, []);
 
@@ -52,7 +51,7 @@ const Products = () => {
         </TableHead>
 
         <TableBody>
-          {products.map((user, key) => (
+          {products?.map((user, key) => (
             <TableRow
               hover
               key={user.id}
