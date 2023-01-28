@@ -35,15 +35,20 @@ const Products = () => {
         </TableHead>
 
         <TableBody>
-          {products?.map((user, key) => (
+          {products?.map((user) => (
             <TableRow
               hover
               key={user.id}
               sx={{
-                "& td": {
+                "& td, & th": { border: 0 },
+                "&.MuiTableRow-root": {
                   backgroundColor: user.color,
                 },
-                "& td, & th": { border: 0 },
+                "&.MuiTableRow-root:hover": {
+                  backgroundColor: user.color,
+                  outline: "3px solid black",
+                  outlineOffset: "-3px",
+                },
               }}
             >
               <TableCell>{user.id}</TableCell>
