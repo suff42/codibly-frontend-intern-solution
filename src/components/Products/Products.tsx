@@ -1,34 +1,18 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import Table from "@mui/material/Table";
 import {
   Paper,
-  styled,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Theme,
 } from "@mui/material";
-import {
-  ProductContextType,
-  ResponseI,
-} from "../../context/ProductContext.types";
+import { ProductContextType } from "../../context/ProductContext.types";
 import { ProductsContext } from "../../context/ProductsContext";
 
 const Products = () => {
-  const { products, setProducts, setTotalPages } = useContext(
-    ProductsContext
-  ) as ProductContextType;
-
-  useEffect(() => {
-    fetch("https://reqres.in/api/products?per_page=5")
-      .then((response) => response.json())
-      .then((data: ResponseI) => {
-        setProducts(data.data);
-        setTotalPages(data.total_pages);
-      });
-  }, []);
+  const { products } = useContext(ProductsContext) as ProductContextType;
 
   return (
     <TableContainer component={Paper} sx={{ width: "auto", minWidth: "400px" }}>

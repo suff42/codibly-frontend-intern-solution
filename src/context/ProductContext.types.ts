@@ -16,12 +16,14 @@ export interface ResponseI {
   data: ProductI[];
 }
 
-export type ProductContextType = {
+export interface ProductContextType {
   products: ProductI[];
   setProducts: (value: ProductI[]) => {};
   totalPages: number;
   setTotalPages: (value: number) => {};
-};
+  currentPage: number;
+  setCurrentPage: (value: number) => {};
+}
 
 export interface ProductsContextI {
   children: React.ReactNode;
