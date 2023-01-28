@@ -1,13 +1,13 @@
 import { CssBaseline } from "@mui/material";
 import { StyledApp } from "./App.styled";
-import Table from "./components/Table/Table";
+import Products from "./components/Products/Products";
 
 function App() {
   return (
     <StyledApp>
       <CssBaseline />
       <input type="text" />
-      <Table />
+      <Products />
       <p>pagination</p>
     </StyledApp>
   );
