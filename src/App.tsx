@@ -1,7 +1,7 @@
 import { CssBaseline } from "@mui/material";
 import { StyledApp } from "./App.styled";
 import Products from "./components/Products/Products";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   ProductContextType,
   ProductI,
@@ -10,8 +10,11 @@ import {
 import { ProductsContext } from "./context/ProductsContext";
 import Search from "./components/Search/Search";
 import { buildAPIAddress } from "./utils/helpers";
+import NetworkError from "./components/NetworkError/NetworkError";
 
 function App() {
+  const [networkError, setNetworkError] = useState(0);
+
   const { setProducts, setTotalPages, currentPage, id } = useContext(
     ProductsContext
   ) as ProductContextType;
@@ -19,19 +22,26 @@ function App() {
   useEffect(() => {
     fetch(buildAPIAddress(currentPage, id))
       .then((response) => {
-        return response.json();
+        if (response.ok) {
+          setNetworkError(0);
+          return response.json();
+        } else {
+          setNetworkError(response.status);
+          throw new Error(`Network Error code: ${response.status}`);
+        }
       })
       .then((data: ResponseI) => {
         id ? setProducts([data.data as ProductI]) : setProducts(data.data),
           setTotalPages(data.total_pages);
-      });
+      })
+      .catch((error) => console.log(error));
   }, [currentPage, id]);
 
   return (
     <StyledApp>
       <CssBaseline />
       <Search />
-      <Products />
+      {networkError ? <NetworkError statusCode={networkError} /> : <Products />}
     </StyledApp>
   );
 }
