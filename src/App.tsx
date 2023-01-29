@@ -33,7 +33,6 @@ function App() {
       <CssBaseline />
       <Search />
       <Products />
-      {id ? null : <PageNumber />}
     </StyledApp>
   );
 }

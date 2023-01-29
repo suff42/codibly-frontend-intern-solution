@@ -10,55 +10,62 @@ import {
 } from "@mui/material";
 import { ProductContextType } from "../../context/ProductContext.types";
 import { ProductsContext } from "../../context/ProductsContext";
+import PageNumber from "../PageNumber/PageNumber";
 
 const Products = () => {
-  const { products } = useContext(ProductsContext) as ProductContextType;
+  const { products, id } = useContext(ProductsContext) as ProductContextType;
 
   return (
-    <TableContainer component={Paper} sx={{ width: "auto", minWidth: "400px" }}>
-      <Table>
-        <TableHead>
-          <TableRow
-            sx={{
-              "& th": {
-                backgroundColor: "#36304a",
-                fontSize: "1.1rem",
-                color: "#fff",
-                border: "none",
-              },
-            }}
-          >
-            <TableCell>ID</TableCell>
-            <TableCell sx={{}}>Name</TableCell>
-            <TableCell>Year</TableCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {products?.map((user) => (
+    <>
+      <TableContainer
+        component={Paper}
+        sx={{ width: "auto", minWidth: "400px" }}
+      >
+        <Table>
+          <TableHead>
             <TableRow
-              hover
-              key={user.id}
               sx={{
-                "& td, & th": { border: 0 },
-                "&.MuiTableRow-root": {
-                  backgroundColor: user.color,
-                },
-                "&.MuiTableRow-root:hover": {
-                  backgroundColor: user.color,
-                  outline: "3px solid black",
-                  outlineOffset: "-3px",
+                "& th": {
+                  backgroundColor: "#36304a",
+                  fontSize: "1.1rem",
+                  color: "#fff",
+                  border: "none",
                 },
               }}
             >
-              <TableCell>{user.id}</TableCell>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.year}</TableCell>
+              <TableCell>ID</TableCell>
+              <TableCell sx={{}}>Name</TableCell>
+              <TableCell>Year</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+
+          <TableBody>
+            {products?.map((user) => (
+              <TableRow
+                hover
+                key={user.id}
+                sx={{
+                  "& td, & th": { border: 0 },
+                  "&.MuiTableRow-root": {
+                    backgroundColor: user.color,
+                  },
+                  "&.MuiTableRow-root:hover": {
+                    backgroundColor: user.color,
+                    outline: "3px solid black",
+                    outlineOffset: "-3px",
+                  },
+                }}
+              >
+                <TableCell>{user.id}</TableCell>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.year}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {id ? null : <PageNumber />}
+    </>
   );
 };
 

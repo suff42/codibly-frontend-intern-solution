@@ -5,7 +5,8 @@ export const StyledApp = styled("div")`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 1rem;
+  margin-top: 2rem;
 `;
