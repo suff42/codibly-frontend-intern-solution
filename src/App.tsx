@@ -1,7 +1,6 @@
 import { CssBaseline } from "@mui/material";
 import { StyledApp } from "./App.styled";
 import Products from "./components/Products/Products";
-import PageNumber from "./components/PageNumber/PageNumber";
 import { useContext, useEffect } from "react";
 import {
   ProductContextType,

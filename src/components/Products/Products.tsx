@@ -7,6 +7,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  useTheme,
 } from "@mui/material";
 import { ProductContextType } from "../../context/ProductContext.types";
 import { ProductsContext } from "../../context/ProductsContext";
@@ -14,19 +15,17 @@ import PageNumber from "../PageNumber/PageNumber";
 
 const Products = () => {
   const { products, id } = useContext(ProductsContext) as ProductContextType;
+  const theme = useTheme();
 
   return (
     <>
-      <TableContainer
-        component={Paper}
-        sx={{ width: "auto", minWidth: "400px" }}
-      >
+      <TableContainer sx={{ width: "auto", minWidth: "400px" }}>
         <Table>
           <TableHead>
             <TableRow
               sx={{
                 "& th": {
-                  backgroundColor: "#36304a",
+                  backgroundColor: theme.palette.primary.dark,
                   fontSize: "1.1rem",
                   color: "#fff",
                   border: "none",
@@ -34,8 +33,8 @@ const Products = () => {
               }}
             >
               <TableCell>ID</TableCell>
-              <TableCell sx={{}}>Name</TableCell>
-              <TableCell>Year</TableCell>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="right">Year</TableCell>
             </TableRow>
           </TableHead>
 
@@ -57,8 +56,8 @@ const Products = () => {
                 }}
               >
                 <TableCell>{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.year}</TableCell>
+                <TableCell align="center">{user.name}</TableCell>
+                <TableCell align="right">{user.year}</TableCell>
               </TableRow>
             ))}
           </TableBody>
