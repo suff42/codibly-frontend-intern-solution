@@ -3,29 +3,37 @@ import { StyledApp } from "./App.styled";
 import Products from "./components/Products/Products";
 import PageNumber from "./components/PageNumber/PageNumber";
 import { useContext, useEffect } from "react";
-import { ProductContextType, ResponseI } from "./context/ProductContext.types";
+import {
+  ProductContextType,
+  ProductI,
+  ResponseI,
+} from "./context/ProductContext.types";
 import { ProductsContext } from "./context/ProductsContext";
+import Search from "./components/Search/Search";
+import { buildAPIAddress } from "./utils/helpers";
 
 function App() {
-  const { setProducts, setTotalPages, currentPage } = useContext(
+  const { setProducts, setTotalPages, currentPage, id } = useContext(
     ProductsContext
   ) as ProductContextType;
 
   useEffect(() => {
-    fetch(`https://reqres.in/api/products?page=${currentPage}&per_page=5`)
-      .then((response) => response.json())
+    fetch(buildAPIAddress(currentPage, id))
+      .then((response) => {
+        return response.json();
+      })
       .then((data: ResponseI) => {
-        setProducts(data.data);
-        setTotalPages(data.total_pages);
+        id ? setProducts([data.data as ProductI]) : setProducts(data.data),
+          setTotalPages(data.total_pages);
       });
-  }, [currentPage]);
+  }, [currentPage, id]);
 
   return (
     <StyledApp>
       <CssBaseline />
-      <input type="text" />
+      <Search />
       <Products />
-      <PageNumber />
+      {id ? null : <PageNumber />}
     </StyledApp>
   );
 }

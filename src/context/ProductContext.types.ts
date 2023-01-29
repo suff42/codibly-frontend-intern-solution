@@ -13,16 +13,18 @@ export interface ResponseI {
   per_page: number;
   total: number;
   total_pages: number;
-  data: ProductI[];
+  data: ProductI[] | ProductI;
 }
 
 export interface ProductContextType {
   products: ProductI[];
-  setProducts: (value: ProductI[]) => {};
+  setProducts: (value: ProductI[] | ProductI) => {};
   totalPages: number;
   setTotalPages: (value: number) => {};
   currentPage: number;
   setCurrentPage: (value: number) => {};
+  id: string;
+  setId: (value: string) => {};
 }
 
 export interface ProductsContextI {

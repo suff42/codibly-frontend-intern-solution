@@ -9,6 +9,7 @@ export const ProductsContextProvider: React.FC<ProductsContextI> = ({
   const [products, setProducts] = useState<ProductI[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [id, setId] = useState("");
 
   return (
     <ProductsContext.Provider
@@ -19,6 +20,8 @@ export const ProductsContextProvider: React.FC<ProductsContextI> = ({
         setTotalPages,
         currentPage,
         setCurrentPage,
+        id,
+        setId,
       }}
     >
       {children}
