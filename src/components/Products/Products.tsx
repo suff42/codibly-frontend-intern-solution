@@ -88,7 +88,9 @@ const Products = () => {
       </TableContainer>
       {id ? null : <PageNumber />}
       <Modal open={openModal} onClose={handleCloseModal}>
-        <ProductDetails details={activeProduct} />
+        <>
+          <ProductDetails details={activeProduct}></ProductDetails>
+        </>
       </Modal>
     </>
   );

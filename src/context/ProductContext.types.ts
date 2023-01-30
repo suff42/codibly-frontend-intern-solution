@@ -16,6 +16,11 @@ export interface ResponseI {
   data: ProductI[] | ProductI;
 }
 
+export interface SearchParamsI {
+  currentPage: string;
+  id: string;
+}
+
 export interface ProductContextType {
   products: ProductI[];
   setProducts: (value: ProductI[] | ProductI) => {};
@@ -25,6 +30,7 @@ export interface ProductContextType {
   setCurrentPage: (value: number) => {};
   id: string;
   setId: (value: string) => {};
+  setSearchParams: (value: SearchParamsI) => {};
 }
 
 export interface ProductsContextI {

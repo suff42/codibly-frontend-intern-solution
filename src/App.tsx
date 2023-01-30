@@ -15,9 +15,8 @@ import NetworkError from "./components/NetworkError/NetworkError";
 function App() {
   const [networkError, setNetworkError] = useState(0);
 
-  const { setProducts, setTotalPages, currentPage, id } = useContext(
-    ProductsContext
-  ) as ProductContextType;
+  const { setProducts, setTotalPages, currentPage, id, setSearchParams } =
+    useContext(ProductsContext) as ProductContextType;
 
   useEffect(() => {
     fetch(buildAPIAddress(currentPage, id))
@@ -31,6 +30,10 @@ function App() {
         }
       })
       .then((data: ResponseI) => {
+        setSearchParams({
+          currentPage: currentPage.toString(),
+          id: id.toString(),
+        });
         id ? setProducts([data.data as ProductI]) : setProducts(data.data),
           setTotalPages(data.total_pages);
       })
