@@ -1,21 +1,43 @@
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Table from "@mui/material/Table";
 import {
-  Paper,
+  Box,
+  Modal,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   useTheme,
 } from "@mui/material";
-import { ProductContextType } from "../../context/ProductContext.types";
+import {
+  ProductContextType,
+  ProductI,
+} from "../../context/ProductContext.types";
 import { ProductsContext } from "../../context/ProductsContext";
 import PageNumber from "../PageNumber/PageNumber";
+import ProductDetails from "../ProductDetails/ProductDetailsI";
+import { emptyProduct } from "../../utils/helpers";
 
 const Products = () => {
   const { products, id } = useContext(ProductsContext) as ProductContextType;
-  const theme = useTheme();
+  const [openModal, setOpenModal] = useState(false);
+  const [activeProduct, setActiveProduct] = useState<ProductI>(emptyProduct);
+
+  const handleOpenModal = (
+    e: React.MouseEvent<HTMLTableRowElement>,
+    product: ProductI
+  ) => {
+    console.log(product);
+    setActiveProduct(product);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setActiveProduct(emptyProduct);
+  };
 
   return (
     <>
@@ -25,7 +47,7 @@ const Products = () => {
             <TableRow
               sx={{
                 "& th": {
-                  backgroundColor: theme.palette.primary.dark,
+                  backgroundColor: (theme) => theme.palette.primary.dark,
                   fontSize: "1.1rem",
                   color: "#fff",
                   border: "none",
@@ -39,31 +61,35 @@ const Products = () => {
           </TableHead>
 
           <TableBody>
-            {products?.map((user) => (
+            {products?.map((product) => (
               <TableRow
+                onClick={(e) => handleOpenModal(e, product)}
                 hover
-                key={user.id}
+                key={product.id}
                 sx={{
                   "& td, & th": { border: 0 },
                   "&.MuiTableRow-root": {
-                    backgroundColor: user.color,
+                    backgroundColor: product.color,
                   },
                   "&.MuiTableRow-root:hover": {
-                    backgroundColor: user.color,
+                    backgroundColor: product.color,
                     outline: "3px solid black",
                     outlineOffset: "-3px",
                   },
                 }}
               >
-                <TableCell>{user.id}</TableCell>
-                <TableCell align="center">{user.name}</TableCell>
-                <TableCell align="right">{user.year}</TableCell>
+                <TableCell>{product.id}</TableCell>
+                <TableCell align="center">{product.name}</TableCell>
+                <TableCell align="right">{product.year}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
       {id ? null : <PageNumber />}
+      <Modal open={openModal} onClose={handleCloseModal}>
+        <ProductDetails details={activeProduct} />
+      </Modal>
     </>
   );
 };
